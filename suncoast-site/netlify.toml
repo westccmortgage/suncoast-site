@@ -1,3 +1,4 @@
 [build]
-  publish = "."
-  functions = "netlify/functions"
+  base = "suncoast-site"
+  publish = "suncoast-site"
+  functions = "suncoast-site/netlify/functions"
