@@ -720,10 +720,13 @@ function sendMessage(text) {
   addMsg(text, false);
   chatHistory.push({role:'user', content:text});
   showTyping(true);
-  fetch('/.netlify/functions/chat', {
+fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-api-key': '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',
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-allow-browser': 'true'
     },
     body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:500, system:chatSys, messages:chatHistory})
   }).then(function(r) {
