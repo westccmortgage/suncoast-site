@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suncoast Capital Mortgage | Florida Home Loans</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1e3a5f;--navy2:#2a4f80;--gold:#f5a623;--gold2:#ffc347;--sand:#fdf8f0;--white:#fff;--slate:#4a5c6e;--light:#eef4fa;--border:rgba(30,58,95,0.13)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;font-family:'Outfit',sans-serif;overflow-x:hidden}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:1001;background:var(--navy);height:34px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:0.72rem;color:rgba(255,255,255,0.65);letter-spacing:0.02em}
+.topbar a{color:var(--gold);text-decoration:none;font-weight:600}.topbar a:hover{color:var(--gold2)}
+.topbar-dot{color:rgba(255,255,255,0.3);margin:0 4px}
+nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 24px rgba(30,58,95,0.1);height:70px}
+.nav-inner{max-width:1240px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:100%;gap:12px}
+.logo-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
+.logo-text-top{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--navy);display:block;line-height:1.1}
+.logo-text-bot{font-size:0.58rem;font-weight:600;color:var(--slate);letter-spacing:0.22em;text-transform:uppercase;display:block}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--slate);font-size:0.82rem;font-weight:500;padding:6px 11px;border-radius:6px;transition:all 0.18s;white-space:nowrap;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--navy);background:var(--light)}
+.nav-phone{color:var(--navy);font-size:0.82rem;font-weight:600;text-decoration:none;white-space:nowrap}
+.nav-phone:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--navy);border:none;padding:9px 20px;border-radius:50px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;white-space:nowrap;flex-shrink:0}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
+#progress-bar{position:fixed;top:104px;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0%;z-index:999;transition:width 0.3s ease}
+#inner-page{display:none;position:fixed;top:104px;left:0;right:0;bottom:0;overflow:hidden;background:#fff;z-index:1}
+#home-page{position:fixed;top:104px;left:0;right:0;bottom:0;overflow-y:auto;background:#fff;z-index:1}
+.hero{background:linear-gradient(155deg,#1e3a5f 0%,#152d4e 55%,#0e2038 100%);min-height:calc(100vh - 70px);display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-orb{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.1) 0%,transparent 70%);top:-100px;right:80px;pointer-events:none}
+.hero-left{padding:80px 50px 80px 72px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,0.14);border:1px solid rgba(245,166,35,0.32);color:var(--gold2);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;padding:6px 14px;border-radius:50px;margin-bottom:24px;width:fit-content}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.6rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:18px}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero-sub{color:rgba(255,255,255,0.58);font-size:0.97rem;line-height:1.72;max-width:420px;margin-bottom:36px;font-weight:300}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--navy);padding:13px 28px;border-radius:50px;border:none;font-weight:700;font-size:0.88rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.22s}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(245,166,35,0.45)}
+.btn-ghost{background:transparent;color:#fff;padding:13px 28px;border-radius:50px;border:1px solid rgba(255,255,255,0.28);font-weight:500;font-size:0.88rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.22s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-right{display:flex;align-items:center;justify-content:center;padding:50px 50px 70px 0;position:relative;z-index:2}
+.hero-card{background:#fff;border-radius:18px;padding:34px;width:100%;max-width:390px;box-shadow:0 40px 100px rgba(0,0,0,0.35)}
+.hc-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--navy);margin-bottom:4px}
+.hc-sub{font-size:0.77rem;color:var(--slate);margin-bottom:22px}
+.form-row{margin-bottom:12px}
+.form-row label{display:block;font-size:0.69rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate);margin-bottom:4px}
+.form-row input,.form-row select{width:100%;padding:10px 12px;border:1.5px solid #d8e5ef;border-radius:8px;font-size:0.86rem;font-family:'Outfit',sans-serif;color:var(--navy);outline:none;transition:border-color 0.2s}
+.form-row input:focus,.form-row select:focus{border-color:var(--navy)}
+.form-g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-submit{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:4px;transition:background 0.2s}
+.form-submit:hover{background:var(--navy2)}
+.form-note{font-size:0.67rem;color:var(--slate);text-align:center;margin-top:8px;opacity:0.6}
+.stats-bar{background:var(--gold);padding:20px 0}
+.stats-inner{max-width:1240px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--navy);display:block;line-height:1}
+.stat-lbl{font-size:0.7rem;color:rgba(30,58,95,0.65);font-weight:500;text-transform:uppercase;letter-spacing:0.07em}
+.cities-strip{background:var(--light);padding:13px 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cities-track{display:flex;gap:48px;animation:marquee 28s linear infinite;white-space:nowrap;width:max-content}
+.cities-track span{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);opacity:0.5}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hsec{padding:72px 0}
+.hsec.alt{background:var(--sand)}
+.hsec.dark{background:var(--navy)}
+.hsec.blue{background:var(--light)}
+.si{max-width:1240px;margin:0 auto;padding:0 32px}
+.sec-lbl{font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:12px}
+.sec-title.light{color:#fff}
+.sec-sub{color:var(--slate);font-size:0.94rem;line-height:1.7;font-weight:300}
+.loans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.loan-card{background:#fff;border-radius:14px;padding:30px 26px;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;position:relative;overflow:hidden}
+.loan-card:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(30,58,95,0.1)}
+.loan-icon{width:48px;height:48px;background:var(--light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px}
+.loan-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--navy);margin-bottom:8px}
+.loan-desc{color:var(--slate);font-size:0.84rem;line-height:1.62;margin-bottom:14px;font-weight:300}
+.loan-lnk{color:var(--gold);font-weight:600;font-size:0.8rem}
+.rates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px}
+.rate-item{background:rgba(255,255,255,0.04);padding:26px;border:1px solid rgba(245,166,35,0.12);cursor:pointer;transition:background 0.2s}
+.rate-item:hover{background:rgba(255,255,255,0.08)}
+.rate-type{color:rgba(255,255,255,0.44);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px}
+.rate-num{font-family:'Cormorant Garamond',serif;font-size:2.7rem;font-weight:700;color:var(--gold);line-height:1}
+.rate-num sup{font-size:1.2rem;vertical-align:super}
+.rate-apr{color:rgba(255,255,255,0.33);font-size:0.73rem;margin-top:5px}
+.rate-badge{display:inline-block;background:rgba(245,166,35,0.18);color:var(--gold2);font-size:0.67rem;padding:2px 9px;border-radius:50px;margin-top:8px;font-weight:500}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;margin-top:48px}
+.steps::before{content:'';position:absolute;top:25px;left:calc(12.5% + 25px);right:calc(12.5% + 25px);height:2px;background:var(--border)}
+.step{text-align:center;padding:0 14px}
+.step-num{width:50px;height:50px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin:0 auto 16px;position:relative;z-index:2;border:3px solid var(--light)}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:8px;color:var(--navy)}
+.step-desc{font-size:0.82rem;color:var(--slate);line-height:1.6;font-weight:300}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.testi-card{background:var(--sand);border-radius:14px;padding:28px;border:1px solid var(--border)}
+.testi-stars{color:var(--gold);font-size:0.88rem;letter-spacing:2px;margin-bottom:12px}
+.testi-text{font-size:0.88rem;color:var(--slate);line-height:1.7;margin-bottom:18px;font-style:italic;font-weight:300}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-av{width:38px;height:38px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:0.84rem;font-family:'Cormorant Garamond',serif;flex-shrink:0}
+.testi-name{font-weight:600;font-size:0.85rem;color:var(--navy)}
+.testi-loc{font-size:0.72rem;color:var(--slate)}
+.cta-box{background:var(--navy);border-radius:18px;padding:52px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.12) 0%,transparent 70%)}
+.cta-label{font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:12px;line-height:1.2}
+.cta-text{color:rgba(255,255,255,0.55);font-size:0.9rem;line-height:1.7;font-weight:300;max-width:480px}
+.cta-badge{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.11);border-radius:9px;padding:10px 14px;margin-top:16px}
+.cta-badge-text{font-size:0.72rem;color:rgba(255,255,255,0.5);line-height:1.4}
+.cta-badge-text strong{color:#fff;display:block}
+.cta-btns{display:flex;flex-direction:column;gap:10px;align-items:center;position:relative;z-index:2;min-width:200px}
+.btn-apply{background:var(--gold);color:var(--navy);padding:14px 28px;border-radius:50px;border:none;font-weight:700;font-size:0.88rem;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap;transition:all 0.22s;width:100%;text-align:center}
+.btn-apply:hover{background:var(--gold2);transform:translateY(-2px)}
+.cta-note{color:rgba(255,255,255,0.3);font-size:0.67rem;text-align:center;line-height:1.5}
+.btn-chat2{background:transparent;border:1px solid rgba(255,255,255,0.22);color:#fff;padding:10px 20px;border-radius:50px;font-size:0.83rem;cursor:pointer;font-family:'Outfit',sans-serif;width:100%;transition:all 0.2s}
+.btn-chat2:hover{border-color:var(--gold);color:var(--gold)}
+.home-footer{background:#0d1e35;color:rgba(255,255,255,0.45);padding:52px 0 24px}
+.footer-grid{max-width:1240px;margin:0 auto;padding:0 32px 40px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:0.82rem;line-height:1.7;margin-top:12px;max-width:240px;font-weight:300}
+.footer-col h4{color:#fff;font-size:0.77rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:8px}
+.footer-col ul a{color:rgba(255,255,255,0.43);text-decoration:none;font-size:0.82rem;font-weight:300;cursor:pointer;transition:color 0.2s}
+.footer-col ul a:hover{color:var(--gold)}
+.footer-bottom{max-width:1240px;margin:0 auto;padding:18px 32px 0;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;font-size:0.68rem;flex-wrap:wrap;gap:8px;color:rgba(255,255,255,0.28)}
+#chat-bubble{position:fixed;bottom:24px;right:24px;z-index:2000;width:58px;height:58px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 32px rgba(30,58,95,0.45);border:2px solid var(--gold);transition:transform 0.2s}
+#chat-bubble:hover{transform:scale(1.08)}
+#chat-bubble svg{width:24px;height:24px;fill:var(--gold)}
+#chat-badge{position:absolute;top:-4px;right:-4px;width:17px;height:17px;background:var(--gold);border-radius:50%;font-size:0.62rem;color:var(--navy);font-weight:700;display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+#chat-window{position:fixed;bottom:96px;right:24px;z-index:2001;width:340px;height:500px;background:#fff;border-radius:18px;box-shadow:0 24px 80px rgba(30,58,95,0.3);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border);transform:scale(0.85) translateY(20px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1)}
+#chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-header{background:var(--navy);padding:15px 17px;display:flex;align-items:center;gap:10px}
+.chat-avatar{width:34px;height:34px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0}
+.chat-header-name{color:#fff;font-weight:600;font-size:0.86rem}
+.chat-header-status{color:rgba(255,255,255,0.48);font-size:0.69rem}
+.chat-close{color:rgba(255,255,255,0.45);cursor:pointer;font-size:1.1rem;margin-left:auto;transition:color 0.2s;line-height:1}
+.chat-close:hover{color:#fff}
+.chat-messages{flex:1;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:9px;background:#f7fafc}
+.msg{max-width:84%;animation:msgIn 0.28s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg-bot{align-self:flex-start}
+.msg-user{align-self:flex-end}
+.msg-bubble{padding:9px 12px;border-radius:14px;font-size:0.83rem;line-height:1.52}
+.msg-bot .msg-bubble{background:#fff;color:var(--navy);border:1px solid var(--border);border-bottom-left-radius:3px;box-shadow:0 2px 8px rgba(30,58,95,0.06)}
+.msg-user .msg-bubble{background:var(--navy);color:#fff;border-bottom-right-radius:3px}
+.msg-time{font-size:0.6rem;color:#99a;margin-top:3px;padding:0 3px}
+.msg-bot .msg-time{text-align:left}
+.msg-user .msg-time{text-align:right}
+.typing-indicator{align-self:flex-start;padding:9px 12px;background:#fff;border-radius:14px;border-bottom-left-radius:3px;border:1px solid var(--border);display:none}
+.typing-indicator span{display:inline-block;width:5px;height:5px;background:#8899aa;border-radius:50%;margin:0 2px;animation:dot 1.2s infinite;opacity:0.4}
+.typing-indicator span:nth-child(2){animation-delay:0.2s}
+.typing-indicator span:nth-child(3){animation-delay:0.4s}
+@keyframes dot{0%,80%,100%{transform:scale(1);opacity:0.4}40%{transform:scale(1.3);opacity:1}}
+.quick-replies{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.qr{background:var(--light);border:1px solid var(--border);color:var(--navy);font-size:0.72rem;padding:4px 9px;border-radius:50px;cursor:pointer;transition:all 0.18s;font-family:'Outfit',sans-serif;white-space:nowrap}
+.qr:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chat-input-row{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:7px;background:#fff}
+.chat-input{flex:1;padding:9px 12px;border:1.5px solid #d5e5ef;border-radius:50px;font-size:0.83rem;font-family:'Outfit',sans-serif;color:var(--navy);outline:none;transition:border-color 0.2s}
+.chat-input:focus{border-color:var(--navy)}
+.chat-send{width:34px;height:34px;background:var(--gold);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;flex-shrink:0}
+.chat-send:hover{background:var(--gold2)}
+.chat-send svg{width:13px;height:13px;fill:var(--navy)}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-right{display:none}
+  .hero-left{padding:50px 24px 60px}
+  .loans-grid,.rates-grid,.testi-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps::before{display:none}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cta-box{grid-template-columns:1fr;padding:36px 24px;text-align:center}
+  .nav-links{display:none}
+  #chat-window{width:calc(100vw - 32px);right:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- AFFILIATION TOPBAR -->
+<div class="topbar">
+  <span>🔒 Licensed &amp; operated under</span>
+  <a onclick="showPage('about')" style="cursor:pointer">West Coast Capital Mortgage Inc.</a>
+  <span class="topbar-dot">·</span>
+  <span>NMLS# 2817729</span>
+  <span class="topbar-dot">·</span>
+  <span>Equal Housing Lender</span>
+  <span class="topbar-dot">·</span>
+  <span>Licensed in FL &amp; CA</span>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo-wrap" onclick="showHome()">
+      <svg width="44" height="37" viewBox="0 0 80 70" fill="none">
+        <line x1="40" y1="2" x2="40" y2="11" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/>
+        <line x1="57" y1="6" x2="52.5" y2="14" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/>
+        <line x1="70" y1="19" x2="62" y2="23" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/>
+        <line x1="23" y1="6" x2="27.5" y2="14" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/>
+        <line x1="10" y1="19" x2="18" y2="23" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/>
+        <path d="M14 38 A26 26 0 0 1 66 38 Z" fill="#f5a623"/>
+        <path d="M2 44 C12 39 22 44 32 44 C42 44 52 39 62 44 C68 47 74 44 78 42" stroke="#1e3a5f" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+        <path d="M6 53 C16 48 26 53 36 53 C46 53 56 48 66 53 C70 55 74 53 78 51" stroke="#2a4f80" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M10 62 C20 57 30 62 40 62 C50 62 60 57 70 62" stroke="#3a6090" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div><span class="logo-text-top">Suncoast Capital</span><span class="logo-text-bot">Mortgage</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a id="nav-home" onclick="showHome()">Home</a></li>
+      <li><a id="nav-loans" onclick="showPage('loans')">Loan Options</a></li>
+      <li><a id="nav-about" onclick="showPage('about')">About</a></li>
+      <li><a id="nav-partners" onclick="showPage('partners')">Partners</a></li>
+      <li><a id="nav-apply" onclick="showPage('apply')">Apply</a></li>
+    </ul>
+    <a class="nav-phone" href="tel:5619259444">📞 (561) 925-9444</a>
+    <button class="nav-cta" onclick="applyNow()">Apply Now</button>
+  </div>
+</nav>
+
+<div id="progress-bar"></div>
+
+<!-- HOME PAGE -->
+<div id="home-page">
+  <section class="hero">
+    <div class="hero-orb"></div>
+    <div class="hero-left">
+      <div class="hero-badge">🌴 Florida's Trusted Mortgage Partner</div>
+      <h1>Your <em>Florida Dream Home</em> Starts Here</h1>
+      <p class="hero-sub">Suncoast Capital Mortgage serves buyers and homeowners across all of Florida — Miami to Jacksonville, Tampa to Orlando. Competitive rates, local expertise, personal service.</p>
+      <div class="hero-btns">
+        <button class="btn-gold" onclick="applyNow()">Apply Online</button>
+        <button class="btn-ghost" onclick="openChat()">💬 Chat With Us</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hc-title">Get Pre-Qualified Today</div>
+        <div class="hc-sub">Takes 2 min · No credit impact</div>
+        <div class="form-row"><label>Full Name</label><input type="text" placeholder="John Smith"/></div>
+        <div class="form-g2">
+          <div class="form-row"><label>Phone</label><input type="tel" placeholder="(561) 000-0000"/></div>
+          <div class="form-row"><label>Email</label><input type="email" placeholder="you@email.com"/></div>
+        </div>
+        <div class="form-row"><label>I'm looking to</label>
+          <select><option>Purchase a Home</option><option>Refinance</option><option>Cash-Out Refinance</option><option>Investment Property</option></select>
+        </div>
+        <div class="form-row"><label>Florida City</label><input type="text" placeholder="Tampa, Miami, Orlando..."/></div>
+        <button class="form-submit" onclick="applyNow()">Get My Free Pre-Qualification →</button>
+        <div class="form-note">🔒 Secure · Never shared · No credit pull</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div><span class="stat-num">$1B+</span><span class="stat-lbl">Loans Funded</span></div>
+      <div><span class="stat-num">3,500+</span><span class="stat-lbl">Happy Families</span></div>
+      <div><span class="stat-num">67</span><span class="stat-lbl">FL Counties</span></div>
+      <div><span class="stat-num">4.9★</span><span class="stat-lbl">Client Rating</span></div>
+    </div>
+  </div>
+
+  <div class="cities-strip">
+    <div class="cities-track">
+      <span>Miami</span><span>Tampa</span><span>Orlando</span><span>Jacksonville</span><span>Fort Lauderdale</span><span>Naples</span><span>Sarasota</span><span>St. Petersburg</span><span>Boca Raton</span><span>West Palm Beach</span><span>Gainesville</span><span>Pensacola</span><span>Cape Coral</span><span>Fort Myers</span><span>Clearwater</span><span>Daytona Beach</span><span>Tallahassee</span><span>Ocala</span>
+      <span>Miami</span><span>Tampa</span><span>Orlando</span><span>Jacksonville</span><span>Fort Lauderdale</span><span>Naples</span><span>Sarasota</span><span>St. Petersburg</span><span>Boca Raton</span><span>West Palm Beach</span><span>Gainesville</span><span>Pensacola</span><span>Cape Coral</span><span>Fort Myers</span><span>Clearwater</span><span>Daytona Beach</span><span>Tallahassee</span><span>Ocala</span>
+    </div>
+  </div>
+
+  <div class="hsec alt">
+    <div class="si">
+      <div style="text-align:center;margin-bottom:48px">
+        <div class="sec-lbl">Loan Programs</div>
+        <div class="sec-title">Financing for Every Florida Buyer</div>
+        <p class="sec-sub" style="max-width:500px;margin:0 auto">Whether buying your first home, upgrading, or refinancing — we have the right program for you.</p>
+      </div>
+      <div class="loans-grid">
+        <div class="loan-card" onclick="showPage('loans')"><div class="loan-icon">🏠</div><div class="loan-title">FHA Loans</div><p class="loan-desc">As little as 3.5% down, flexible credit. Perfect for first-time Florida buyers.</p><div class="loan-lnk">Learn More →</div></div>
+        <div class="loan-card" onclick="showPage('loans')"><div class="loan-icon">📊</div><div class="loan-title">Conventional Loans</div><p class="loan-desc">Fixed-rate stability and predictable payments for buyers with solid credit.</p><div class="loan-lnk">Learn More →</div></div>
+        <div class="loan-card" onclick="showPage('loans')"><div class="loan-icon">🏛️</div><div class="loan-title">Jumbo Loans</div><p class="loan-desc">Finance high-value Florida waterfront homes and luxury estates.</p><div class="loan-lnk">Learn More →</div></div>
+        <div class="loan-card" onclick="showPage('loans')"><div class="loan-icon">🎖️</div><div class="loan-title">VA Loans</div><p class="loan-desc">Up to 100% financing for Florida veterans and active military. No PMI.</p><div class="loan-lnk">Learn More →</div></div>
+        <div class="loan-card" onclick="showPage('loans')"><div class="loan-icon">🔄</div><div class="loan-title">Refinancing</div><p class="loan-desc">Lower your rate or payment. Florida's market is moving — now may be the time.</p><div class="loan-lnk">Learn More →</div></div>
+        <div class="loan-card" onclick="showPage('loans')"><div class="loan-icon">💰</div><div class="loan-title">Investment Property</div><p class="loan-desc">Florida's booming rental market is calling. Expert investment loan guidance.</p><div class="loan-lnk">Learn More →</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hsec dark">
+    <div class="si">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:0">
+        <div><div class="sec-lbl">Live Market Data</div><div class="sec-title light">Today's Mortgage Rates</div></div>
+        <p style="color:rgba(255,255,255,0.35);font-size:0.74rem;max-width:240px;line-height:1.6;text-align:right">For 680–740 credit score borrowers. Contact us for your FL quote.</p>
+      </div>
+      <div class="rates-grid">
+        <div class="rate-item" onclick="applyNow()"><div class="rate-type">30-Year Fixed</div><div class="rate-num">6.<sup>74</sup>%</div><div class="rate-apr">APR 6.89%</div><span class="rate-badge">Most Popular</span></div>
+        <div class="rate-item" onclick="applyNow()"><div class="rate-type">15-Year Fixed</div><div class="rate-num">6.<sup>12</sup>%</div><div class="rate-apr">APR 6.31%</div><span class="rate-badge">Pay Off Faster</span></div>
+        <div class="rate-item" onclick="applyNow()"><div class="rate-type">5/1 ARM</div><div class="rate-num">6.<sup>05</sup>%</div><div class="rate-apr">APR 6.22%</div><span class="rate-badge">Low Start Rate</span></div>
+        <div class="rate-item" onclick="applyNow()"><div class="rate-type">FHA 30-Year</div><div class="rate-num">6.<sup>48</sup>%</div><div class="rate-apr">APR 7.10%</div><span class="rate-badge">Low Down Payment</span></div>
+        <div class="rate-item" onclick="applyNow()"><div class="rate-type">VA Loan</div><div class="rate-num">6.<sup>21</sup>%</div><div class="rate-apr">APR 6.40%</div><span class="rate-badge">For Veterans</span></div>
+        <div class="rate-item" onclick="applyNow()"><div class="rate-type">Jumbo 30-Year</div><div class="rate-num">6.<sup>88</sup>%</div><div class="rate-apr">APR 7.02%</div><span class="rate-badge">Luxury Homes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hsec blue">
+    <div class="si">
+      <div style="text-align:center;margin-bottom:48px">
+        <div class="sec-lbl">How It Works</div>
+        <div class="sec-title">Your Path to a Florida Home</div>
+        <p class="sec-sub" style="max-width:480px;margin:0 auto">Simple, transparent, stress-free — from first click to keys in hand.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-title">Chat &amp; Apply</div><p class="step-desc">Talk to our AI assistant or fill out the quick form.</p></div>
+        <div class="step"><div class="step-num">2</div><div class="step-title">Pre-Approval</div><p class="step-desc">Get your letter fast to shop with confidence.</p></div>
+        <div class="step"><div class="step-num">3</div><div class="step-title">Lock Your Rate</div><p class="step-desc">We lock the best rate and guide you through underwriting.</p></div>
+        <div class="step"><div class="step-num">4</div><div class="step-title">Close &amp; Move In</div><p class="step-desc">We handle the details. Welcome to your Florida home!</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hsec">
+    <div class="si">
+      <div style="text-align:center;margin-bottom:48px">
+        <div class="sec-lbl">Client Stories</div>
+        <div class="sec-title">Florida Homeowners Love Us</div>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"We relocated from New York and had no idea how Florida mortgages worked. Suncoast walked us through everything and got us an amazing rate on our Tampa Bay home."</p><div class="testi-author"><div class="testi-av">MK</div><div><div class="testi-name">Michael K.</div><div class="testi-loc">Tampa, FL</div></div></div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Buying a waterfront condo in Miami felt impossible until we found Suncoast. They handled our jumbo loan and we closed in just 28 days!"</p><div class="testi-author"><div class="testi-av">SR</div><div><div class="testi-name">Sofia R.</div><div class="testi-loc">Miami, FL</div></div></div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"As a veteran I used my VA loan to buy in Orlando. Suncoast made it seamless — 100% financing, no PMI, and they answered every question."</p><div class="testi-author"><div class="testi-av">JT</div><div><div class="testi-name">James T.</div><div class="testi-loc">Orlando, FL</div></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hsec alt">
+    <div class="si">
+      <div class="cta-box">
+        <div>
+          <div class="cta-label">Licensed &amp; Ready</div>
+          <div class="cta-title">Ready to Start Your Florida Mortgage?</div>
+          <p class="cta-text">Suncoast Capital Mortgage partners with <strong style="color:#fff">West Coast Capital Mortgage Inc.</strong> — a fully licensed MLO company — to finalize and close your loan.</p>
+          <div class="cta-badge"><span style="font-size:1.2rem">🔒</span><div class="cta-badge-text"><strong>West Coast Capital Mortgage Inc.</strong>Licensed MLO · NMLS# 2817729 · Equal Housing Lender</div></div>
+        </div>
+        <div class="cta-btns">
+          <button class="btn-apply" onclick="applyNow()">Start My Application →</button>
+          <div class="cta-note">Powered by West Coast Capital Mortgage Inc.<br>Secure · Licensed · Trusted</div>
+          <button class="btn-chat2" onclick="openChat()">💬 Chat With Us First</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-footer">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:9px">
+          <svg width="34" height="28" viewBox="0 0 80 70" fill="none"><line x1="40" y1="2" x2="40" y2="11" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/><line x1="57" y1="6" x2="52.5" y2="14" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/><line x1="23" y1="6" x2="27.5" y2="14" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/><path d="M14 38 A26 26 0 0 1 66 38 Z" fill="#f5a623"/><path d="M2 44 C12 39 22 44 32 44 C42 44 52 39 62 44 C68 47 74 44 78 42" stroke="#4a7fb5" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M6 53 C16 48 26 53 36 53 C46 53 56 48 66 53" stroke="#3a6090" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+          <div><span class="logo-text-top" style="color:#fff">Suncoast Capital</span><span class="logo-text-bot" style="color:var(--gold)">Mortgage</span></div>
+        </div>
+        <p>Suncoast Capital Mortgage is an affiliate of West Coast Capital Mortgage Inc. All loans are originated and licensed under West Coast Capital Mortgage Inc. · NMLS# 2817729 · Serving all 67 Florida counties.</p>
+      </div>
+      <div class="footer-col"><h4>Loan Programs</h4><ul>
+        <li><a onclick="showPage('loans')">FHA Loans</a></li>
+        <li><a onclick="showPage('loans')">Conventional</a></li>
+        <li><a onclick="showPage('loans')">Jumbo Loans</a></li>
+        <li><a onclick="showPage('loans')">VA Loans</a></li>
+        <li><a onclick="showPage('loans')">Refinancing</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('partners')">Partners</a></li>
+        <li><a onclick="applyNow()">Apply Now</a></li>
+        <li><a onclick="openChat()">Chat With Us</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul>
+        <li><a href="tel:5619259444">(561) 925-9444</a></li>
+        <li><a href="mailto:info@suncoastcapitalmortgage.com">Email Us</a></li>
+        <li><a onclick="applyNow()">Get Pre-Qualified</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Suncoast Capital Mortgage · An affiliate of West Coast Capital Mortgage Inc. · All loans originated under West Coast Capital Mortgage Inc. License · NMLS# 2817729 · Equal Housing Lender · Licensed in FL &amp; CA</span>
+      <span style="font-size:0.66rem">Privacy · Disclosures · Terms</span>
+    </div>
+  </div>
+</div><!-- end home-page -->
+
+<!-- INNER PAGE CONTAINER -->
+<div id="inner-page"></div>
+
+<!-- CHAT BUBBLE -->
+<div id="chat-bubble" onclick="openChat()">
+  <div id="chat-badge">1</div>
+  <svg viewBox="0 0 24 24"><path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z"/></svg>
+</div>
+
+<!-- CHAT WINDOW -->
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">☀️</div>
+    <div><div class="chat-header-name">Suncoast Mortgage Assistant</div><div class="chat-header-status">🟢 Online · Replies instantly</div></div>
+    <div class="chat-close" onclick="closeChat()">✕</div>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg msg-bot">
+      <div class="msg-bubble">Hi there! 👋 Welcome to Suncoast Capital Mortgage. I help with Florida home loans and can get you pre-qualified.<br><br>What can I help you with today?</div>
+      <div class="msg-time">Just now</div>
+      <div class="quick-replies">
+        <button class="qr" onclick="sendQuick('I want to buy a home in Florida')">🏠 Buy a Home</button>
+        <button class="qr" onclick="sendQuick('I want to refinance')">🔄 Refinance</button>
+        <button class="qr" onclick="sendQuick('What are today s rates?')">📊 Rates</button>
+        <button class="qr" onclick="sendQuick('How do I get pre-approved?')">✅ Pre-Approval</button>
+      </div>
+    </div>
+    <div class="typing-indicator" id="typingEl"><span></span><span></span><span></span></div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Ask about Florida mortgages..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <button class="chat-send" onclick="sendMsg()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+  </div>
+</div>
+
+<script>
+var homePage = document.getElementById('home-page');
+var innerPage = document.getElementById('inner-page');
+var progressBar = document.getElementById('progress-bar');
+
+function applyNow() {
+  showPage('apply');
+}
+
+function setNav(id) {
+  var links = document.querySelectorAll('.nav-links a');
+  for (var i = 0; i < links.length; i++) links[i].classList.remove('active');
+  var el = document.getElementById('nav-' + id);
+  if (el) el.classList.add('active');
+}
+
+function showHome() {
+  homePage.style.display = 'block';
+  innerPage.style.display = 'none';
+  setNav('home');
+  homePage.scrollTop = 0;
+}
+
+var wccmPages = {
+  'loans':    'https://www.westcoastcapitalmortgage.com/loan-options/',
+  'about':    'https://www.westcoastcapitalmortgage.com/about/',
+  'partners': 'https://www.westcoastcapitalmortgage.com/partner-listings/',
+  'apply':    'https://www.westcoastcapitalmortgage.com/apply/'
+};
+
+function showPage(id) {
+  progressBar.style.width = '0%';
+  setTimeout(function() { progressBar.style.width = '80%'; }, 50);
+
+  homePage.style.display = 'none';
+  innerPage.style.display = 'block';
+  innerPage.scrollTop = 0;
+  setNav(id);
+
+  // Build iframe wrapper
+  var url = wccmPages[id];
+  innerPage.innerHTML =
+    '<div style="position:relative;width:100%;height:100%">' +
+    '<div id="iframe-loader" style="position:absolute;inset:0;background:#fdf8f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:10">' +
+    '<svg width="56" height="48" viewBox="0 0 80 70" fill="none"><line x1="40" y1="2" x2="40" y2="11" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/><line x1="57" y1="6" x2="52.5" y2="14" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/><line x1="23" y1="6" x2="27.5" y2="14" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/><path d="M14 38 A26 26 0 0 1 66 38 Z" fill="#f5a623"/><path d="M2 44 C12 39 22 44 32 44 C42 44 52 39 62 44 C68 47 74 44 78 42" stroke="#1e3a5f" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M6 53 C16 48 26 53 36 53 C46 53 56 48 66 53" stroke="#2a4f80" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>' +
+    '<div style="font-family:Cormorant Garamond,serif;font-size:1.2rem;color:#1e3a5f;font-weight:600">Loading...</div>' +
+    '<div style="display:flex;gap:6px"><span style="width:8px;height:8px;background:#f5a623;border-radius:50%;animation:dot 1.2s infinite;opacity:0.4;display:inline-block"></span><span style="width:8px;height:8px;background:#f5a623;border-radius:50%;animation:dot 1.2s 0.2s infinite;opacity:0.4;display:inline-block"></span><span style="width:8px;height:8px;background:#f5a623;border-radius:50%;animation:dot 1.2s 0.4s infinite;opacity:0.4;display:inline-block"></span></div>' +
+    '</div>' +
+    '<iframe id="wccm-frame" src="' + url + '" style="width:100%;height:100%;border:none;opacity:0;transition:opacity 0.4s" ' +
+    'onload="document.getElementById(\'iframe-loader\').style.display=\'none\';this.style.opacity=\'1\';document.getElementById(\'progress-bar\').style.width=\'100%\';setTimeout(function(){document.getElementById(\'progress-bar\').style.width=\'0%\'},400)">' +
+    '</iframe>' +
+    '</div>';
+}
+
+function getLoansPage() {
+  return '<div style="background:linear-gradient(155deg,#1e3a5f,#0e2038);padding:72px 0 60px"><div style="max-width:1240px;margin:0 auto;padding:0 32px;text-align:center"><div style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#f5a623;margin-bottom:10px">Loan Programs</div><h1 style="font-family:Cormorant Garamond,serif;font-size:3rem;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.1">Florida Loan Options</h1><p style="color:rgba(255,255,255,0.55);font-size:0.97rem;line-height:1.7;max-width:500px;margin:0 auto;font-weight:300">Every Florida buyer is different. We have the right program for your exact situation.</p></div></div>' +
+  '<div style="padding:72px 0;background:#fdf8f0"><div style="max-width:1240px;margin:0 auto;padding:0 32px"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">' +
+  loanCard('🏠','FHA Loans','As low as 3.5% down','Government-backed loans for first-time FL buyers. Flexible credit from 580.','Min 3.5% down|Credit scores 580+|Mortgage insurance|First-time buyer programs') +
+  loanCard('📊','Conventional Loans','Best for strong credit','Fixed or adjustable-rate with predictable payments. No PMI with 20% down.','Min 3-5% down|Credit score 620+|No PMI at 20% down|Fixed or ARM') +
+  loanCard('🏛️','Jumbo Loans','Luxury FL properties','Finance high-value properties above conforming limits — waterfront and luxury estates.','Loan amounts $750k+|Competitive rates|Primary and 2nd homes|Investment options') +
+  loanCard('🎖️','VA Loans','100% for veterans','Exclusively for veterans and active military. No down payment, no PMI.','0% down payment|No PMI required|Competitive rates|Streamline refinance') +
+  loanCard('🔄','Refinancing','Lower your rate','Lower your rate, reduce payments, or switch loan types. Florida market is moving.','Rate and term refi|Cash-out refi|Streamline options|No-closing-cost') +
+  loanCard('💰','Investment Property','FL rental market','Finance rentals, vacation properties, and multi-unit buildings with expert guidance.','Single and multi-family|Vacation rentals|DSCR loans|LLC financing') +
+  '</div></div></div>' +
+  ctaSection('Not Sure Which Loan is Right for You?', 'Our AI assistant can help in minutes, or call (561) 925-9444.') +
+  sharedFooter();
+}
+
+function loanCard(icon, title, tag, desc, detailsStr) {
+  var details = detailsStr.split('|');
+  var lis = '';
+  for (var i = 0; i < details.length; i++) {
+    lis += '<li style="font-size:0.82rem;color:#4a5c6e;padding:3px 0;display:flex;align-items:center;gap:7px"><span style="color:#f5a623;font-weight:700">✓</span>' + details[i] + '</li>';
+  }
+  return '<div style="background:#fff;border-radius:14px;padding:30px 26px;border:1px solid rgba(30,58,95,0.13)">' +
+    '<div style="width:48px;height:48px;background:#eef4fa;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px">' + icon + '</div>' +
+    '<div style="display:inline-block;background:rgba(245,166,35,0.12);color:#f5a623;font-size:0.68rem;font-weight:600;padding:2px 9px;border-radius:50px;margin-bottom:8px">' + tag + '</div>' +
+    '<div style="font-family:Cormorant Garamond,serif;font-size:1.15rem;color:#1e3a5f;margin-bottom:8px">' + title + '</div>' +
+    '<p style="color:#4a5c6e;font-size:0.83rem;line-height:1.62;margin-bottom:14px;font-weight:300">' + desc + '</p>' +
+    '<ul style="list-style:none;margin-bottom:20px">' + lis + '</ul>' +
+    '<button onclick="applyNow()" style="background:#1e3a5f;color:#fff;border:none;padding:9px 20px;border-radius:50px;font-size:0.81rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">Apply for This Loan →</button>' +
+    '</div>';
+}
+
+function getAboutPage() {
+  return '<div style="background:linear-gradient(155deg,#1e3a5f,#0e2038);padding:72px 0 60px"><div style="max-width:1240px;margin:0 auto;padding:0 32px;text-align:center"><div style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#f5a623;margin-bottom:10px">Our Story</div><h1 style="font-family:Cormorant Garamond,serif;font-size:3rem;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.1">About Suncoast Capital Mortgage</h1><p style="color:rgba(255,255,255,0.55);font-size:0.97rem;max-width:520px;margin:0 auto;font-weight:300;line-height:1.7">Florida-focused, client-first, backed by a trusted licensed MLO company.</p></div></div>' +
+  '<div style="padding:72px 0"><div style="max-width:1240px;margin:0 auto;padding:0 32px">' +
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:72px">' +
+  '<div><div style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#f5a623;margin-bottom:10px">Who We Are</div><div style="font-family:Cormorant Garamond,serif;font-size:2.2rem;font-weight:700;color:#1e3a5f;line-height:1.2;margin-bottom:16px">Florida Experts, Backed by National Strength</div><p style="color:#4a5c6e;font-size:0.94rem;line-height:1.75;margin-bottom:14px;font-weight:300">Suncoast Capital Mortgage gives Florida homebuyers a local, dedicated mortgage experience backed by the resources of a nationally recognized lender.</p><p style="color:#4a5c6e;font-size:0.94rem;line-height:1.75;margin-bottom:14px;font-weight:300">We serve all 67 Florida counties — from the Panhandle to the Keys — with personalized guidance and competitive rates.</p><p style="color:#4a5c6e;font-size:0.94rem;line-height:1.75;font-weight:300">All licensing is handled with <strong style="color:#1e3a5f">West Coast Capital Mortgage Inc.</strong> — a trusted, fully licensed MLO company.</p></div>' +
+  '<div style="background:#fdf8f0;border-radius:18px;padding:40px;border:1px solid rgba(30,58,95,0.13)"><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">' +
+  statBox('$1B+','Loans Funded') + statBox('3,500+','Happy Families') + statBox('67','FL Counties') + statBox('4.9★','Avg Rating') +
+  '</div></div></div>' +
+  '<div style="background:#fdf8f0;border-radius:18px;padding:52px;border:1px solid rgba(30,58,95,0.13);margin-bottom:48px"><div style="text-align:center;margin-bottom:40px"><div style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#f5a623;margin-bottom:10px">Our Values</div><div style="font-family:Cormorant Garamond,serif;font-size:2rem;font-weight:700;color:#1e3a5f">Why Florida Families Choose Us</div></div>' +
+  '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">' +
+  valueBox('🌴','Local Expertise','We know Florida real estate from waterfront Miami to retirement communities in Sarasota.') +
+  valueBox('⚡','Fast Closings','Florida\'s market moves fast, and so do we. We work to close your loan on time, every time.') +
+  valueBox('🤝','Personal Service','You\'re not a number here. Every client gets a dedicated team member who knows your file.') +
+  '</div></div>' +
+  ctaSection('Ready to Work With Us?', 'Start your Florida mortgage journey today.') +
+  '</div></div>' + sharedFooter();
+}
+
+function statBox(num, lbl) {
+  return '<div style="text-align:center;padding:18px;background:#fff;border-radius:10px;border:1px solid rgba(30,58,95,0.13)"><div style="font-family:Cormorant Garamond,serif;font-size:1.9rem;font-weight:700;color:#1e3a5f">' + num + '</div><div style="font-size:0.72rem;color:#4a5c6e;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">' + lbl + '</div></div>';
+}
+
+function valueBox(icon, title, desc) {
+  return '<div style="text-align:center"><div style="font-size:2.2rem;margin-bottom:12px">' + icon + '</div><div style="font-family:Cormorant Garamond,serif;font-size:1.15rem;color:#1e3a5f;margin-bottom:9px">' + title + '</div><p style="color:#4a5c6e;font-size:0.84rem;line-height:1.62;font-weight:300">' + desc + '</p></div>';
+}
+
+function getPartnersPage() {
+  return '<div style="background:linear-gradient(155deg,#1e3a5f,#0e2038);padding:72px 0 60px"><div style="max-width:1240px;margin:0 auto;padding:0 32px;text-align:center"><div style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#f5a623;margin-bottom:10px">Our Network</div><h1 style="font-family:Cormorant Garamond,serif;font-size:3rem;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.1">Partner Listings</h1><p style="color:rgba(255,255,255,0.55);font-size:0.97rem;max-width:480px;margin:0 auto;font-weight:300;line-height:1.7">We partner with trusted leaders to deliver the best Florida mortgage experience.</p></div></div>' +
+  '<div style="padding:72px 0;background:#fdf8f0"><div style="max-width:1240px;margin:0 auto;padding:0 32px">' +
+  '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px">' +
+  partnerCard('West Coast Capital Mortgage Inc.','Licensed MLO Partner','Primary Partner','Our primary licensing and loan fulfillment partner. A trusted MLO with deep expertise in residential and investment mortgage products.','https://www.westcoastcapitalmortgage.com') +
+  partnerCard('Zillow','Live Rate Data','Data Partner','All displayed mortgage rates are powered by Zillow data for 680–740 credit score borrowers, updated to reflect current market conditions.','https://www.zillow.com') +
+  partnerCard('Florida Realtors®','Industry Association','Industry Partner','We work with licensed Florida real estate agents and brokers to provide seamless homebuying experiences statewide.','https://www.floridarealtors.org') +
+  partnerCard('Fannie Mae','Conventional Loan Backing','Lending Partner','Conventional loan products are underwritten in accordance with Fannie Mae guidelines for qualified borrowers.','https://www.fanniemae.com') +
+  partnerCard('FHA / HUD','FHA Loan Programs','Gov. Partner','FHA loan products are backed by the Federal Housing Administration, providing accessible homeownership for Florida first-time buyers.','https://www.hud.gov') +
+  partnerCard('U.S. Dept. of Veterans Affairs','VA Loan Programs','Veterans','VA loan products backed by the U.S. Department of Veterans Affairs — up to 100% financing for Florida veterans with no PMI.','https://www.va.gov') +
+  '</div>' +
+  '<div style="background:#1e3a5f;border-radius:18px;padding:48px;text-align:center"><div style="font-family:Cormorant Garamond,serif;font-size:2rem;font-weight:700;color:#fff;margin-bottom:12px">Become a Partner</div><p style="color:rgba(255,255,255,0.5);margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto;font-weight:300;font-size:0.92rem">Florida real estate agent, builder, or financial professional? Let\'s grow together.</p><button onclick="openChat()" style="background:#f5a623;color:#1e3a5f;border:none;padding:13px 28px;border-radius:50px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:Outfit,sans-serif">Contact Us About Partnering</button></div>' +
+  '</div></div>' + sharedFooter();
+}
+
+function partnerCard(name, role, badge, desc, url) {
+  return '<div style="background:#fff;border-radius:14px;padding:30px;border:1px solid rgba(30,58,95,0.13);display:flex;flex-direction:column;gap:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div style="font-family:Cormorant Garamond,serif;font-size:1.1rem;color:#1e3a5f;font-weight:600">' + name + '</div><span style="background:rgba(245,166,35,0.12);color:#f5a623;font-size:0.66rem;font-weight:600;padding:2px 9px;border-radius:50px;white-space:nowrap">' + badge + '</span></div><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#4a5c6e">' + role + '</div><p style="color:#4a5c6e;font-size:0.83rem;line-height:1.62;font-weight:300;flex:1">' + desc + '</p><a href="' + url + '" target="_blank" style="color:#f5a623;font-size:0.8rem;font-weight:600;text-decoration:none">Visit Website →</a></div>';
+}
+
+function ctaSection(title, sub) {
+  return '<div style="background:#1e3a5f;padding:60px 0"><div style="max-width:1240px;margin:0 auto;padding:0 32px;text-align:center"><div style="font-family:Cormorant Garamond,serif;font-size:2.1rem;font-weight:700;color:#fff;margin-bottom:12px">' + title + '</div><p style="color:rgba(255,255,255,0.5);margin-bottom:28px;font-size:0.94rem;font-weight:300">' + sub + '</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button onclick="applyNow()" style="background:#f5a623;color:#1e3a5f;border:none;padding:13px 28px;border-radius:50px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:Outfit,sans-serif">Start My Application</button><button onclick="openChat()" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:13px 28px;border-radius:50px;font-size:0.88rem;cursor:pointer;font-family:Outfit,sans-serif">💬 Chat With Us</button></div></div></div>';
+}
+
+function sharedFooter() {
+  return '<div style="background:#0d1e35;color:rgba(255,255,255,0.28);padding:28px 0"><div style="max-width:1240px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:0.68rem"><span>© 2025 Suncoast Capital Mortgage · West Coast Capital Mortgage Inc. · NMLS# 2817729 · Equal Housing Lender · Licensed in FL</span><a onclick="showHome()" style="color:#f5a623;cursor:pointer;text-decoration:none">← Back to Home</a></div></div>';
+}
+
+function getApplyPage() {
+  return '<div style="background:linear-gradient(155deg,#1e3a5f,#0e2038);padding:72px 0 60px"><div style="max-width:1240px;margin:0 auto;padding:0 32px;text-align:center"><div style="font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#f5a623;margin-bottom:10px">Get Started</div><h1 style="font-family:Cormorant Garamond,serif;font-size:3rem;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.1">Apply for a Florida Home Loan</h1><p style="color:rgba(255,255,255,0.55);font-size:0.97rem;max-width:500px;margin:0 auto;font-weight:300;line-height:1.7">Takes about 5 minutes. No credit pull required to get started.</p></div></div>' +
+  '<div style="padding:72px 0;background:#fdf8f0"><div style="max-width:800px;margin:0 auto;padding:0 32px">' +
+  '<div style="background:#fff;border-radius:20px;padding:52px;border:1px solid rgba(30,58,95,0.13);box-shadow:0 20px 60px rgba(30,58,95,0.08)">' +
+
+  '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:40px;background:rgba(30,58,95,0.08);border-radius:10px;padding:4px" id="stepIndicator">' +
+  stepTab(1,'Personal Info',true) + stepTab(2,'Property',false) + stepTab(3,'Finances',false) + stepTab(4,'Review',false) +
+  '</div>' +
+
+  '<div id="step1">' +
+  '<div style="font-family:Cormorant Garamond,serif;font-size:1.6rem;color:#1e3a5f;margin-bottom:6px">Personal Information</div>' +
+  '<p style="color:#4a5c6e;font-size:0.85rem;margin-bottom:28px;font-weight:300">Tell us a bit about yourself so we can personalize your loan options.</p>' +
+  formRow('Full Name','text','full-name','John Smith') +
+  formRow2('Email Address','email','email','john@email.com','Phone Number','tel','phone','(561) 000-0000') +
+  formRow2('Date of Birth','date','dob','','Social Security (last 4)','text','ssn','1234') +
+  formRow('Current Address','text','address','123 Main St, Tampa FL 33601') +
+  formRow2('How long at this address?','select','residency','1 Year|2 Years|3-5 Years|5+ Years','Residency Status','select','residency-status','US Citizen|Permanent Resident|Other') +
+  '<button onclick="nextStep(2)" style="width:100%;margin-top:8px;padding:14px;background:#1e3a5f;color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">Continue →</button>' +
+  '</div>' +
+
+  '<div id="step2" style="display:none">' +
+  '<div style="font-family:Cormorant Garamond,serif;font-size:1.6rem;color:#1e3a5f;margin-bottom:6px">Property Details</div>' +
+  '<p style="color:#4a5c6e;font-size:0.85rem;margin-bottom:28px;font-weight:300">Tell us about the property you want to purchase or refinance.</p>' +
+  formRow('What are you looking to do?','select','loan-purpose','Purchase a Home|Refinance|Cash-Out Refinance|Investment Property') +
+  formRow('Loan Type','select','loan-type','Conventional|FHA Loan|VA Loan|Jumbo Loan|USDA Loan') +
+  formRow('Florida City / Area','text','city','Tampa, Miami, Orlando...') +
+  formRow2('Estimated Home Price','text','home-price','$500,000','Down Payment Amount','text','down-payment','$100,000 (20%)') +
+  formRow('Property Type','select','property-type','Single Family Home|Condo|Townhouse|Multi-Family|New Construction') +
+  formRow('How Soon Are You Looking to Buy?','select','timeline','ASAP|1-3 Months|3-6 Months|6-12 Months|Just Exploring') +
+  '<div style="display:flex;gap:12px;margin-top:8px"><button onclick="nextStep(1)" style="flex:1;padding:14px;background:#eef4fa;color:#1e3a5f;border:none;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">← Back</button><button onclick="nextStep(3)" style="flex:2;padding:14px;background:#1e3a5f;color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">Continue →</button></div>' +
+  '</div>' +
+
+  '<div id="step3" style="display:none">' +
+  '<div style="font-family:Cormorant Garamond,serif;font-size:1.6rem;color:#1e3a5f;margin-bottom:6px">Financial Information</div>' +
+  '<p style="color:#4a5c6e;font-size:0.85rem;margin-bottom:28px;font-weight:300">This helps us find the best loan options for your situation.</p>' +
+  formRow('Employment Status','select','employment','Employed Full-Time|Employed Part-Time|Self-Employed|Retired|Other') +
+  formRow2('Annual Income','text','income','$100,000','Monthly Debt Payments','text','debt','$500') +
+  formRow('Credit Score Range','select','credit','760+ (Excellent)|720-759 (Very Good)|680-719 (Good)|640-679 (Fair)|Below 640') +
+  formRow('Have you had a bankruptcy or foreclosure?','select','bankruptcy','No|Bankruptcy (discharged 2+ yrs)|Foreclosure (3+ yrs ago)|Short Sale') +
+  formRow('Are you a US Military Veteran?','select','veteran','No|Yes – Active Duty|Yes – Veteran|Yes – Surviving Spouse') +
+  '<div style="display:flex;gap:12px;margin-top:8px"><button onclick="nextStep(2)" style="flex:1;padding:14px;background:#eef4fa;color:#1e3a5f;border:none;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">← Back</button><button onclick="nextStep(4)" style="flex:2;padding:14px;background:#1e3a5f;color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">Continue →</button></div>' +
+  '</div>' +
+
+  '<div id="step4" style="display:none">' +
+  '<div style="font-family:Cormorant Garamond,serif;font-size:1.6rem;color:#1e3a5f;margin-bottom:6px">Review &amp; Submit</div>' +
+  '<p style="color:#4a5c6e;font-size:0.85rem;margin-bottom:24px;font-weight:300">Almost done! Review and submit your pre-qualification request.</p>' +
+  '<div style="background:#fdf8f0;border-radius:12px;padding:24px;border:1px solid rgba(30,58,95,0.1);margin-bottom:24px">' +
+  '<div style="font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#4a5c6e;margin-bottom:12px">What Happens Next</div>' +
+  '<div style="display:flex;flex-direction:column;gap:10px">' +
+  reviewStep('1','A loan specialist will review your application within 1 business day.') +
+  reviewStep('2','We\'ll contact you at the phone number or email you provided.') +
+  reviewStep('3','We\'ll present your best loan options with no obligation.') +
+  reviewStep('4','If you\'re ready, we\'ll start the formal application process.') +
+  '</div></div>' +
+  '<div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:10px;padding:16px;margin-bottom:24px;font-size:0.82rem;color:#4a5c6e;line-height:1.6">' +
+  '🔒 <strong style="color:#1e3a5f">No credit pull.</strong> Submitting this form does not affect your credit score. Your information is encrypted and never sold to third parties.' +
+  '</div>' +
+  '<div style="display:flex;gap:12px"><button onclick="nextStep(3)" style="flex:1;padding:14px;background:#eef4fa;color:#1e3a5f;border:none;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">← Back</button><button onclick="submitApp()" style="flex:2;padding:14px;background:#f5a623;color:#1e3a5f;border:none;border-radius:10px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:Outfit,sans-serif">Submit My Application 🎉</button></div>' +
+  '</div>' +
+
+  '<div id="step5" style="display:none;text-align:center;padding:20px 0">' +
+  '<div style="font-size:3.5rem;margin-bottom:16px">🎉</div>' +
+  '<div style="font-family:Cormorant Garamond,serif;font-size:2rem;color:#1e3a5f;margin-bottom:12px">Application Submitted!</div>' +
+  '<p style="color:#4a5c6e;font-size:0.94rem;line-height:1.7;margin-bottom:28px;font-weight:300">Thank you! A Suncoast Capital Mortgage specialist will be in touch within 1 business day to discuss your options.</p>' +
+  '<div style="background:#fdf8f0;border-radius:12px;padding:24px;border:1px solid rgba(30,58,95,0.1);margin-bottom:24px;text-align:left">' +
+  '<div style="font-weight:600;color:#1e3a5f;margin-bottom:8px">Questions in the meantime?</div>' +
+  '<p style="color:#4a5c6e;font-size:0.88rem">Call us at <strong>(561) 925-9444</strong> or use the chat button below — we\'re here to help!</p>' +
+  '</div>' +
+  '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">' +
+  '<button onclick="showHome()" style="padding:13px 26px;background:#1e3a5f;color:#fff;border:none;border-radius:50px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">← Back to Home</button>' +
+  '<button onclick="openChat()" style="padding:13px 26px;background:#f5a623;color:#1e3a5f;border:none;border-radius:50px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:Outfit,sans-serif">💬 Chat With Us</button>' +
+  '</div></div>' +
+
+  '</div></div></div>' + sharedFooter();
+}
+
+function stepTab(num, label, active) {
+  var bg = active ? '#1e3a5f' : 'transparent';
+  var color = active ? '#fff' : '#4a5c6e';
+  return '<div id="tab' + num + '" style="background:' + bg + ';color:' + color + ';border-radius:8px;padding:10px 6px;text-align:center;transition:all 0.2s"><div style="font-size:0.65rem;font-weight:700;opacity:0.7">Step ' + num + '</div><div style="font-size:0.77rem;font-weight:600">' + label + '</div></div>';
+}
+
+function formRow(label, type, id, placeholder) {
+  var inner = '';
+  if (type === 'select') {
+    var opts = placeholder.split('|').map(function(o) { return '<option>' + o + '</option>'; }).join('');
+    inner = '<select id="' + id + '" style="width:100%;padding:10px 12px;border:1.5px solid #d8e5ef;border-radius:8px;font-size:0.86rem;font-family:Outfit,sans-serif;color:#1e3a5f;outline:none;background:#fff">' + opts + '</select>';
+  } else {
+    inner = '<input type="' + type + '" id="' + id + '" placeholder="' + placeholder + '" style="width:100%;padding:10px 12px;border:1.5px solid #d8e5ef;border-radius:8px;font-size:0.86rem;font-family:Outfit,sans-serif;color:#1e3a5f;outline:none">';
+  }
+  return '<div style="margin-bottom:14px"><label style="display:block;font-size:0.69rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:#4a5c6e;margin-bottom:5px">' + label + '</label>' + inner + '</div>';
+}
+
+function formRow2(l1, t1, id1, p1, l2, t2, id2, p2) {
+  return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' + formRow(l1,t1,id1,p1) + formRow(l2,t2,id2,p2) + '</div>';
+}
+
+function reviewStep(num, text) {
+  return '<div style="display:flex;align-items:flex-start;gap:12px"><div style="width:24px;height:24px;background:#1e3a5f;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:0.7rem;font-weight:700;flex-shrink:0">' + num + '</div><p style="color:#4a5c6e;font-size:0.85rem;line-height:1.6;font-weight:300;margin-top:2px">' + text + '</p></div>';
+}
+
+function nextStep(n) {
+  for (var i = 1; i <= 5; i++) {
+    var s = document.getElementById('step' + i);
+    if (s) s.style.display = (i === n) ? 'block' : 'none';
+    var tab = document.getElementById('tab' + i);
+    if (tab) {
+      tab.style.background = (i === n) ? '#1e3a5f' : 'transparent';
+      tab.style.color = (i === n) ? '#fff' : '#4a5c6e';
+    }
+  }
+  document.getElementById('inner-page').scrollTop = 0;
+}
+
+function submitApp() {
+  nextStep(5);
+}
+
+// CHAT
+var chatHistory = [];
+var chatSys = 'You are a warm mortgage assistant for Suncoast Capital Mortgage, serving all of Florida. Answer questions about FHA, Conventional, Jumbo, VA, Refinance, and Investment loans. Naturally collect name, phone, and email one at a time. Guide ready buyers to westcoastcapitalmortgage.com/apply. Rates: 30yr 6.74%, 15yr 6.12%, FHA 6.48%, VA 6.21%, Jumbo 6.88%. Phone: (561) 925-9444. Keep replies to 2-4 sentences, warm and helpful.';
+
+function openChat() {
+  document.getElementById('chat-window').classList.add('open');
+  document.getElementById('chat-badge').style.display = 'none';
+  setTimeout(function() { document.getElementById('chatInput').focus(); }, 300);
+}
+function closeChat() { document.getElementById('chat-window').classList.remove('open'); }
+
+function addMsg(text, bot) {
+  var msgs = document.getElementById('chatMessages');
+  var typing = document.getElementById('typingEl');
+  var d = document.createElement('div');
+  d.className = 'msg ' + (bot ? 'msg-bot' : 'msg-user');
+  var t = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  d.innerHTML = '<div class="msg-bubble">' + text + '</div><div class="msg-time">' + t + '</div>';
+  msgs.insertBefore(d, typing);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping(v) {
+  document.getElementById('typingEl').style.display = v ? 'block' : 'none';
+  document.getElementById('chatMessages').scrollTop = 99999;
+}
+
+function sendQuick(text) {
+  var qrs = document.querySelectorAll('.quick-replies');
+  for (var i = 0; i < qrs.length; i++) qrs[i].remove();
+  sendMessage(text);
+}
+
+function sendMsg() {
+  var inp = document.getElementById('chatInput');
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  var qrs = document.querySelectorAll('.quick-replies');
+  for (var i = 0; i < qrs.length; i++) qrs[i].remove();
+  sendMessage(text);
+}
+
+function sendMessage(text) {
+  addMsg(text, false);
+  chatHistory.push({role:'user', content:text});
+  showTyping(true);
+  fetch('/.netlify/functions/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:500, system:chatSys, messages:chatHistory})
+  }).then(function(r) {
+    return r.json();
+  }).then(function(data) {
+    var reply = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : 'Call us at (561) 925-9444 or visit westcoastcapitalmortgage.com/apply';
+    chatHistory.push({role:'assistant', content:reply});
+    showTyping(false);
+    addMsg(reply, true);
+  }).catch(function() {
+    showTyping(false);
+    addMsg('Sorry, connection issue. Please call <strong>(561) 925-9444</strong> to speak with us directly!', true);
+  });
+}
+</script>
+</body>
+</html>
