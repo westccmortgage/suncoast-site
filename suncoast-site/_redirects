@@ -1,0 +1,17 @@
+# Suncoast Capital Mortgage — host and local-intent redirects
+# Canonical corporate host: https://suncoastcapitalmortgage.com
+
+https://sunccmortgage.com/* https://suncoastcapitalmortgage.com/:splat 301!
+https://www.sunccmortgage.com/* https://suncoastcapitalmortgage.com/:splat 301!
+https://sunstatecapitalmortgage.com/* https://suncoastcapitalmortgage.com/:splat 301!
+https://www.sunstatecapitalmortgage.com/* https://suncoastcapitalmortgage.com/:splat 301!
+
+# County acquisition domains -> substantive canonical county pages
+https://miamidadecountymortgage.com/* https://suncoastcapitalmortgage.com/miami-dade-county-mortgage 301!
+https://www.miamidadecountymortgage.com/* https://suncoastcapitalmortgage.com/miami-dade-county-mortgage 301!
+https://miamidademortgage.com/* https://suncoastcapitalmortgage.com/miami-dade-county-mortgage 301!
+https://www.miamidademortgage.com/* https://suncoastcapitalmortgage.com/miami-dade-county-mortgage 301!
+https://browardcountymortgage.com/* https://suncoastcapitalmortgage.com/broward-county-mortgage 301!
+https://www.browardcountymortgage.com/* https://suncoastcapitalmortgage.com/broward-county-mortgage 301!
+https://palmbeachcountymortgage.com/* https://suncoastcapitalmortgage.com/palm-beach-county-mortgage 301!
+https://www.palmbeachcountymortgage.com/* https://suncoastcapitalmortgage.com/palm-beach-county-mortgage 301!
