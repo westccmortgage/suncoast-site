@@ -1,15 +1,64 @@
 (function(){
+  var ADS_ID='AW-18417657219';
+  var LEAD_DESTINATION='AW-18417657219/LiA7CPWd4eocEIPLnM5E';
+  var PENDING_KEY='suncoast_pending_lead';
   var params=new URLSearchParams(window.location.search);
   var keys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid'];
   var saved={};
+
+  function safeGet(key){try{return localStorage.getItem(key)||''}catch(e){return ''}}
+  function safeSet(key,value){try{localStorage.setItem(key,value)}catch(e){}}
+  function sessionGet(key){try{return sessionStorage.getItem(key)||''}catch(e){return ''}}
+  function sessionSet(key,value){try{sessionStorage.setItem(key,value)}catch(e){}}
+  function sessionRemove(key){try{sessionStorage.removeItem(key)}catch(e){}}
+  function uid(){return 'sc_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10)}
+
   keys.forEach(function(k){
-    var v=params.get(k)||localStorage.getItem('suncoast_'+k)||'';
-    if(v){saved[k]=v;localStorage.setItem('suncoast_'+k,v)}
+    var v=params.get(k)||safeGet('suncoast_'+k)||'';
+    if(v){saved[k]=v;safeSet('suncoast_'+k,v)}
   });
-  var landing=localStorage.getItem('suncoast_landing_page')||window.location.href;
-  if(!localStorage.getItem('suncoast_landing_page'))localStorage.setItem('suncoast_landing_page',landing);
+  var landing=safeGet('suncoast_landing_page')||window.location.href;
+  if(!safeGet('suncoast_landing_page'))safeSet('suncoast_landing_page',landing);
+
   window.dataLayer=window.dataLayer||[];
+  window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+  window.gtag('js',new Date());
+  window.gtag('config',ADS_ID);
+  if(!document.querySelector('script[data-suncoast-google-ads]')){
+    var ads=document.createElement('script');
+    ads.async=true;
+    ads.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(ADS_ID);
+    ads.setAttribute('data-suncoast-google-ads','');
+    document.head.appendChild(ads);
+  }
+
   function push(name,extra){window.dataLayer.push(Object.assign({event:name,page_location:window.location.href},extra||{}))}
+
+  function markPending(form){
+    var item={
+      id:uid(),
+      ts:Date.now(),
+      form_name:form.getAttribute('name')||'suncoast-lead'
+    };
+    sessionSet(PENDING_KEY,JSON.stringify(item));
+  }
+
+  function fireConfirmedLead(){
+    if(!/^\/thanks(?:\.html)?\/?$/.test(window.location.pathname))return;
+    var raw=sessionGet(PENDING_KEY);
+    if(!raw)return;
+    var item;
+    try{item=JSON.parse(raw)}catch(e){sessionRemove(PENDING_KEY);return}
+    if(!item||!item.id||!item.ts||Date.now()-item.ts>30*60*1000){sessionRemove(PENDING_KEY);return}
+    sessionRemove(PENDING_KEY);
+    push('suncoast_lead_submit',{form_name:item.form_name,lead_event_id:item.id});
+    window.gtag('event','conversion',{
+      send_to:LEAD_DESTINATION,
+      value:1.0,
+      currency:'USD',
+      transaction_id:item.id
+    });
+  }
 
   function languagePath(prefix,base){
     if(!base||base==='/') return prefix?prefix+'/':'/';
@@ -51,7 +100,7 @@
     document.querySelectorAll('form[data-suncoast-lead]').forEach(function(form){
       Object.keys(saved).forEach(function(k){var el=form.querySelector('[name="'+k+'"]');if(el)el.value=saved[k]});
       var lp=form.querySelector('[name="landing_page"]');if(lp)lp.value=landing;
-      form.addEventListener('submit',function(){push('suncoast_lead_submit',{form_name:form.getAttribute('name')||'suncoast-lead'})})
+      form.addEventListener('submit',function(){markPending(form)})
     });
     document.querySelectorAll('a[href^="tel:"]').forEach(function(a){
       a.addEventListener('click',function(){push('suncoast_phone_click',{phone:a.getAttribute('href').replace('tel:','')})})
@@ -61,6 +110,7 @@
     });
     document.querySelectorAll('[data-property-review]').forEach(function(a){
       a.addEventListener('click',function(){push('suncoast_property_review_start',{destination:a.href})})
-    })
+    });
+    fireConfirmedLead();
   })
 })();
