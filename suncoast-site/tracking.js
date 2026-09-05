@@ -100,7 +100,29 @@
     document.querySelectorAll('form[data-suncoast-lead]').forEach(function(form){
       Object.keys(saved).forEach(function(k){var el=form.querySelector('[name="'+k+'"]');if(el)el.value=saved[k]});
       var lp=form.querySelector('[name="landing_page"]');if(lp)lp.value=landing;
-      form.addEventListener('submit',function(){markPending(form)})
+      var sp=form.querySelector('[name="submission_page"]');if(sp)sp.value=window.location.href;
+      var sending=false;
+      form.addEventListener('submit',async function(event){
+        event.preventDefault();
+        if(sending)return;
+        sending=true;
+        var button=form.querySelector('button[type="submit"]');
+        if(button)button.disabled=true;
+        if(sp)sp.value=window.location.href;
+        sessionRemove(PENDING_KEY);
+        try{
+          var response=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()});
+          if(!response.ok)throw new Error('Submission failed');
+          markPending(form);
+          window.location.assign(form.getAttribute('action')||'/thanks');
+        }catch(error){
+          sending=false;
+          if(button)button.disabled=false;
+          var notice=form.querySelector('[data-submit-error]');
+          if(!notice){notice=document.createElement('p');notice.setAttribute('data-submit-error','');notice.setAttribute('role','alert');form.appendChild(notice)}
+          notice.textContent='Your request could not be sent. Please try again.';
+        }
+      })
     });
     document.querySelectorAll('a[href^="tel:"]').forEach(function(a){
       a.addEventListener('click',function(){push('suncoast_phone_click',{phone:a.getAttribute('href').replace('tel:','')})})
