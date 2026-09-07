@@ -1,0 +1,23 @@
+name: Apply SunCoast September 2026 live update
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-sep2026-live.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply targeted live-site updates
+        run: python3 scripts/apply_sep2026_live.py
+      - name: Commit live SunCoast changes
+        run: |
+          git config user.name "SunCoast Visibility Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add suncoast-site
+          git commit -m "Implement September 2026 SunCoast SEO AEO updates" || exit 0
+          git push origin main
