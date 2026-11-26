@@ -7,7 +7,6 @@ Production source for https://suncoastcapitalmortgage.com.
 Connect this GitHub repository to Netlify using the `main` branch. The root `netlify.toml` already sets:
 
 - Publish directory: `suncoast-site`
-- Functions directory: `suncoast-site/netlify/functions`
 
 No build command is required for the static site.
 

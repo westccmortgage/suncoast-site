@@ -62,7 +62,7 @@
 
   function languagePath(prefix,base){
     if(!base||base==='/') return prefix?prefix+'/':'/';
-    return (prefix||'')+base;
+    return prefix?prefix+base+'/':base;
   }
 
   function injectLanguageLinks(){
@@ -77,8 +77,8 @@
     if(supported.indexOf(base)===-1)return;
     var wrap=document.createElement('div');
     wrap.setAttribute('data-suncoast-languages','');
+    wrap.setAttribute('role','group');
     wrap.setAttribute('aria-label','Language');
-    wrap.style.cssText='display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.08em;white-space:nowrap';
     [
       ['EN',languagePath('',base),'en'],
       ['ES',languagePath('/es',base),'es'],
@@ -88,15 +88,72 @@
       a.href=item[1];
       a.textContent=item[0];
       a.hreflang=item[2]==='pt'?'pt-BR':item[2];
-      a.style.cssText='text-decoration:none;color:'+(locale===item[2]?'#173452':'#748391')+';padding:5px 3px;border-bottom:2px solid '+(locale===item[2]?'#f3a51e':'transparent');
+      a.lang=item[2]==='pt'?'pt-BR':item[2];
+      if(locale===item[2])a.setAttribute('aria-current','true');
       wrap.appendChild(a);
     });
-    var phone=nav.querySelector('.nav-phone');
-    nav.insertBefore(wrap,phone||null);
+    var menu=nav.querySelector('.nav-links');
+    if(menu)menu.appendChild(wrap);else nav.insertBefore(wrap,nav.querySelector('.nav-phone')||null);
+  }
+
+  var ERR={
+    en:['Your request could not be sent. Please try again or call ','.'],
+    es:['No pudimos enviar su solicitud. Inténtelo de nuevo o llame al ','.'],
+    pt:['Não foi possível enviar sua solicitação. Tente novamente ou ligue para ','.']
+  };
+  function showError(form){
+    var l=(document.documentElement.lang||'en').toLowerCase().slice(0,2);
+    var m=ERR[l]||ERR.en;
+    var notice=form.querySelector('[data-submit-error]');
+    if(!notice){notice=document.createElement('p');notice.setAttribute('data-submit-error','');notice.setAttribute('role','alert');form.appendChild(notice)}
+    notice.textContent='';
+    notice.appendChild(document.createTextNode(m[0]));
+    var a=document.createElement('a');a.href='tel:+13106541577';a.textContent='(310) 654-1577';
+    notice.appendChild(a);
+    notice.appendChild(document.createTextNode(m[1]));
+  }
+
+  function initMenu(){
+    var nav=document.querySelector('.nav');
+    var btn=nav&&nav.querySelector('.nav-toggle');
+    var links=nav&&nav.querySelector('.nav-links');
+    if(!btn||!links)return;
+    var root=document.documentElement;
+    var open=false;
+    var phone=nav.querySelector('.nav-inner > .nav-phone');
+    if(phone&&!links.querySelector('.nav-phone-m')){
+      var call=document.createElement('a');
+      call.className='nav-phone-m';
+      call.href=phone.getAttribute('href');
+      call.textContent=phone.textContent;
+      links.appendChild(call);
+    }
+    function fit(){
+      if(open)links.style.maxHeight=Math.max(160,window.innerHeight-nav.getBoundingClientRect().bottom)+'px';
+      else links.style.maxHeight='';
+    }
+    function set(next){
+      open=next;
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      nav.classList.toggle('menu-open',open);
+      root.classList.toggle('menu-open',open);
+      fit();
+    }
+    btn.addEventListener('click',function(e){e.stopPropagation();set(!open)});
+    links.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('a'))set(false)});
+    document.addEventListener('click',function(e){
+      if(open&&!nav.contains(e.target)){e.preventDefault();e.stopPropagation();set(false)}
+    },true);
+    document.addEventListener('keydown',function(e){
+      if((e.key==='Escape'||e.key==='Esc')&&open){set(false);btn.focus()}
+    });
+    window.addEventListener('resize',function(){if(window.innerWidth>900&&open)set(false);else fit()});
+    window.addEventListener('pageshow',function(){if(open)set(false)});
   }
 
   document.addEventListener('DOMContentLoaded',function(){
     injectLanguageLinks();
+    initMenu();
     document.querySelectorAll('form[data-suncoast-lead]').forEach(function(form){
       Object.keys(saved).forEach(function(k){var el=form.querySelector('[name="'+k+'"]');if(el)el.value=saved[k]});
       var lp=form.querySelector('[name="landing_page"]');if(lp)lp.value=landing;
@@ -108,6 +165,8 @@
         sending=true;
         var button=form.querySelector('button[type="submit"]');
         if(button)button.disabled=true;
+        form.setAttribute('aria-busy','true');
+        var notice0=form.querySelector('[data-submit-error]');if(notice0)notice0.remove();
         if(sp)sp.value=window.location.href;
         sessionRemove(PENDING_KEY);
         try{
@@ -118,9 +177,8 @@
         }catch(error){
           sending=false;
           if(button)button.disabled=false;
-          var notice=form.querySelector('[data-submit-error]');
-          if(!notice){notice=document.createElement('p');notice.setAttribute('data-submit-error','');notice.setAttribute('role','alert');form.appendChild(notice)}
-          notice.textContent='Your request could not be sent. Please try again.';
+          form.removeAttribute('aria-busy');
+          showError(form);
         }
       })
     });
